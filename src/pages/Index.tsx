@@ -1,34 +1,11 @@
 import { motion } from "framer-motion";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import {
-  Pizza, Flame, Megaphone, Smartphone, BarChart3, MessageCircle,
-  ClipboardList, Sparkles, Play, ArrowRight, Check, Instagram, Linkedin,
-  ChevronDown, Star, Zap, Target, TrendingUp,
+  Flame, Megaphone, Smartphone, BarChart3, MessageCircle,
+  ClipboardList, Sparkles, ArrowRight, Check, Instagram,
+  ChevronDown, Zap, Target, TrendingUp, Globe, Quote,
 } from "lucide-react";
 import { toast } from "sonner";
-
-/* ------------- Small visual primitives ------------- */
-
-const FloatingSlice = ({ className = "", delay = 0 }: { className?: string; delay?: number }) => (
-  <div className={`pointer-events-none absolute ${className}`} style={{ animationDelay: `${delay}s` }}>
-    <svg viewBox="0 0 120 120" className="w-full h-full drop-shadow-[0_20px_40px_rgba(255,90,0,0.45)] animate-float">
-      <defs>
-        <linearGradient id="sliceG" x1="0" y1="0" x2="1" y2="1">
-          <stop offset="0%" stopColor="hsl(44 96% 62%)" />
-          <stop offset="60%" stopColor="hsl(18 92% 56%)" />
-          <stop offset="100%" stopColor="hsl(6 80% 48%)" />
-        </linearGradient>
-      </defs>
-      <path d="M60 8 L112 108 Q60 124 8 108 Z" fill="url(#sliceG)" stroke="hsl(28 45% 22%)" strokeWidth="3" strokeLinejoin="round" />
-      <path d="M14 104 Q60 118 106 104" fill="none" stroke="hsl(36 55% 88%)" strokeWidth="6" strokeLinecap="round" opacity="0.85"/>
-      <circle cx="55" cy="55" r="7" fill="hsl(6 80% 52%)" />
-      <circle cx="78" cy="78" r="6" fill="hsl(6 80% 52%)" />
-      <circle cx="40" cy="82" r="5" fill="hsl(6 80% 52%)" />
-      <circle cx="70" cy="40" r="4" fill="hsl(130 60% 35%)" />
-      <circle cx="50" cy="92" r="3" fill="hsl(130 60% 35%)" />
-    </svg>
-  </div>
-);
 
 const Embers = () => (
   <div aria-hidden className="pointer-events-none absolute inset-0 overflow-hidden">
@@ -77,11 +54,12 @@ const Nav = () => {
   return (
     <header className={`fixed top-0 inset-x-0 z-50 transition-all duration-500 ${scrolled ? "py-3" : "py-5"}`}>
       <div className={`container flex items-center justify-between rounded-full px-5 py-3 transition-all ${scrolled ? "glass shadow-card" : ""}`}>
-        <a href="#top" className="flex items-center gap-2 font-display font-bold text-lg">
-          <span className="relative inline-flex items-center justify-center w-9 h-9 rounded-full bg-gradient-warm shadow-ember">
-            <Pizza className="w-5 h-5 text-primary-foreground" />
+        <a href="#top" className="flex items-center gap-2">
+          <img src="/images/logo-brasa.png" alt="Brasa Company" className="h-9 w-auto" />
+          <span style={{ fontFamily: "'Poppins', sans-serif" }}>
+            <span style={{ fontWeight: 700, textTransform: "uppercase" }} className="text-gradient-warm">BRASA</span>
+            <span style={{ fontWeight: 400 }} className="text-foreground"> company</span>
           </span>
-          <span>Pizza <span className="text-gradient-warm">Growth</span></span>
         </a>
         <nav className="hidden md:flex items-center gap-7 text-sm text-muted-foreground">
           <a href="#metodo" className="hover:text-foreground transition">Método</a>
@@ -105,10 +83,10 @@ const Hero = () => (
     <div className="container relative grid lg:grid-cols-[1.05fr_1fr] gap-14 items-center">
       <div>
         <Reveal>
-          <SectionLabel>Assessoria boutique • só pizzarias</SectionLabel>
+          <SectionLabel>Assessoria de Marketing para Pizzarias</SectionLabel>
         </Reveal>
         <Reveal delay={0.05}>
-          <h1 className="mt-6 text-4xl sm:text-5xl md:text-6xl lg:text-7xl leading-[1.02]">
+          <h1 className="mt-6 leading-[1.02]">
             Sua pizzaria precisa de uma <span className="text-gradient-warm">assessoria de marketing</span> que venda todos os dias
           </h1>
         </Reveal>
@@ -125,7 +103,7 @@ const Hero = () => (
         </Reveal>
         <Reveal delay={0.3}>
           <div className="mt-10 flex flex-wrap items-center gap-x-6 gap-y-3 text-sm text-muted-foreground">
-            <span className="flex items-center gap-2"><Check className="w-4 h-4 text-cheese" /> +2.000 restaurantes impactados</span>
+            <span className="flex items-center gap-2"><Check className="w-4 h-4 text-cheese" /> +2.000 pizzarias impactadas</span>
             <span className="flex items-center gap-2"><Check className="w-4 h-4 text-cheese" /> Delivery, salão e retirada</span>
             <span className="flex items-center gap-2"><Check className="w-4 h-4 text-cheese" /> 100% focado em pizzarias</span>
           </div>
@@ -136,31 +114,36 @@ const Hero = () => (
       <Reveal delay={0.2}>
         <div className="relative aspect-square max-w-[560px] mx-auto">
           {/* glow */}
-          <div className="absolute inset-6 rounded-full bg-gradient-warm opacity-30 blur-3xl animate-glow" />
-          {/* pizza disc */}
-          <div className="absolute inset-0 rounded-full bg-[radial-gradient(circle_at_50%_45%,hsl(44_96%_60%)_0%,hsl(18_92%_50%)_55%,hsl(28_45%_22%)_100%)] shadow-ember animate-spin-slow flex items-center justify-center">
-            <div className="absolute inset-3 rounded-full border-4 border-crust/70" />
-            {/* toppings */}
-            {[...Array(9)].map((_, i) => {
-              const angle = (i / 9) * Math.PI * 2;
-              const r = 38;
-              const x = 50 + Math.cos(angle) * r;
-              const y = 50 + Math.sin(angle) * r;
-              return (
-                <span key={i} className="absolute w-5 h-5 rounded-full" style={{ left: `${x}%`, top: `${y}%`, transform: "translate(-50%,-50%)", background: i % 2 ? "hsl(6 80% 52%)" : "hsl(130 60% 38%)", boxShadow: "inset 0 -2px 4px rgba(0,0,0,.25)" }} />
-              );
-            })}
+          <div className="absolute inset-6 rounded-full bg-gradient-warm opacity-25 blur-3xl animate-glow" />
+
+          {/* pizza photo rotating */}
+          <div className="absolute inset-0 rounded-full overflow-hidden shadow-ember animate-spin-slow">
+            <img
+              src="/images/pizza-hero.png"
+              alt="Pizza Margherita"
+              className="w-full h-full object-cover"
+            />
           </div>
-          {/* rocket slice */}
-          <div className="absolute -top-6 -right-6 w-44 h-44 animate-float">
-            <FloatingSlice />
+
+          {/* decorative leaves */}
+          <img src="/images/folha1.png" alt="" className="pointer-events-none absolute -top-8 -left-8 w-20 h-auto opacity-90 animate-float" style={{ animationDelay: "0s" }} />
+          <img src="/images/folha2.png" alt="" className="pointer-events-none absolute -bottom-6 -left-10 w-16 h-auto opacity-85 animate-float" style={{ animationDelay: "1.2s" }} />
+          <img src="/images/folha3.png" alt="" className="pointer-events-none absolute top-8 -right-10 w-18 h-auto opacity-90 animate-float" style={{ animationDelay: "0.6s" }} />
+
+          {/* floating pizza slice photo */}
+          <div className="absolute -top-6 -right-6 w-40 h-40 animate-float drop-shadow-[0_16px_32px_rgba(200,50,0,0.45)]">
+            <img
+              src="/images/pedacopizza-hero.png"
+              alt="Pedaço de pizza"
+              className="w-full h-full object-contain"
+            />
           </div>
 
           {/* metric cards */}
           <motion.div drag dragConstraints={{ top: -10, bottom: 10, left: -10, right: 10 }}
             className="absolute -left-6 top-10 glass rounded-3xl px-4 py-3 shadow-card animate-float-slow">
             <div className="flex items-center gap-3">
-              <div className="w-9 h-9 rounded-2xl bg-tomato/20 flex items-center justify-center"><TrendingUp className="w-5 h-5 text-tomato" /></div>
+              <div className="w-9 h-9 rounded-2xl bg-basil/20 flex items-center justify-center"><TrendingUp className="w-5 h-5 text-basil" /></div>
               <div>
                 <p className="text-xs text-muted-foreground">+ pedidos</p>
                 <p className="font-display text-lg leading-none">+187%</p>
@@ -245,15 +228,15 @@ const LeadForm = () => {
   return (
     <section id="form" className="relative py-24 md:py-32">
       <div className="container">
-        <div className="max-w-3xl">
+        <div className="lg:max-w-[50%]">
           <Reveal><SectionLabel>Próximo passo</SectionLabel></Reveal>
           <Reveal delay={0.05}>
-            <h2 className="mt-5 text-3xl sm:text-4xl md:text-5xl">
+            <h2 className="mt-5">
               Não saia agora: faltam poucos passos para sua <span className="text-gradient-warm">pizzaria mudar</span>.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
-            <p className="mt-5 text-muted-foreground text-lg max-w-2xl">
+            <p className="mt-5 text-muted-foreground text-lg">
               Complete o formulário e descubra como transformar seu marketing em uma máquina previsível de pedidos.
             </p>
           </Reveal>
@@ -287,10 +270,16 @@ const LeadForm = () => {
                     <option>Delivery</option><option>Salão</option><option>Ambos</option>
                   </select>
                 </Field>
-                <Field label="Pedidos por semana">
-                  <select required name="vol" className="field">
+                <Field label="Faturamento mensal">
+                  <select required name="faturamento" className="field">
                     <option value="">Selecione...</option>
-                    <option>Até 100</option><option>100 - 300</option><option>300+</option>
+                    <option>R$10.000 - R$50.000</option>
+                    <option>R$51.000 - R$80.000</option>
+                    <option>R$80.000 - R$120.000</option>
+                    <option>R$121.000 - R$150.000</option>
+                    <option>R$150.000 - R$200.000</option>
+                    <option>R$201.000 - R$400.000</option>
+                    <option>R$400.000+</option>
                   </select>
                 </Field>
               </div>
@@ -316,18 +305,33 @@ const Field = ({ label, children }: { label: string; children: React.ReactNode }
 /* ------------- TESTIMONIALS ------------- */
 const Testimonials = () => {
   const items = [
-    { name: "Pizzaria Bella Massa", result: "Campanhas locais com aumento de pedidos no delivery", hue: "18 92% 56%" },
-    { name: "Forno da Vila", result: "Criativos novos e cardápio otimizado", hue: "6 80% 52%" },
-    { name: "Napoli Express", result: "Mais recorrência no WhatsApp", hue: "44 96% 58%" },
+    {
+      name: "Pizzaria Dona Bella Massa",
+      text: "Aumentamos nosso faturamento de 40% com a metodologia, hoje já estamos planejando mudar nosso fluxo de trabalho para melhorar a margem de lucro da DM.",
+      hue: "18 92% 56%",
+      initials: "DB",
+    },
+    {
+      name: "Forno da Villa",
+      text: "Sensacional, trabalho impecável. A antiga agência passava faturamento bruto, agora temos clareza do nosso crescimento e vendas por canal. Brasa Company faz um serviço exemplar. Parabéns.",
+      hue: "6 80% 52%",
+      initials: "FV",
+    },
+    {
+      name: "Napoli Pizza Express",
+      text: "Volume de ligações, WhatsApp e venda direta do cardápio estão incríveis. Migrando operação quase 100% e parando de depender do iFood. Meninos são demais, muita organização e profissionalismo.",
+      hue: "44 96% 58%",
+      initials: "NP",
+    },
   ];
   return (
     <section id="provas" className="py-24 md:py-32 relative">
       <div className="container">
-        <Reveal><SectionLabel>Prova social</SectionLabel></Reveal>
-        <div className="mt-5 max-w-3xl">
+        <Reveal><SectionLabel>Veja Nossos Clientes</SectionLabel></Reveal>
+        <div className="mt-5 lg:max-w-[50%]">
           <Reveal delay={0.05}>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl">
-              Pizzarias e restaurantes <span className="text-gradient-warm">crescendo</span> com estratégias que dão fome.
+            <h2>
+              Pizzarias estão crescendo com a metodologia que <span className="text-gradient-warm">dão fome</span>.
             </h2>
           </Reveal>
           <Reveal delay={0.1}>
@@ -340,29 +344,36 @@ const Testimonials = () => {
         <div className="mt-14 grid md:grid-cols-3 gap-6">
           {items.map((t, i) => (
             <Reveal key={t.name} delay={i * 0.08}>
-              <div className="group tilt-card relative rounded-4xl overflow-hidden border border-border/60 bg-card/60">
-                <div className="aspect-[4/5] relative overflow-hidden" style={{ background: `radial-gradient(80% 60% at 50% 30%, hsl(${t.hue} / 0.55), transparent 70%), linear-gradient(160deg, hsl(22 16% 12%), hsl(22 16% 7%))` }}>
+              <div className="tilt-card relative border border-border/60 bg-card/60 overflow-hidden flex flex-col" style={{ borderRadius: "1rem" }}>
+                {/* pizzaria image placeholder */}
+                <div className="aspect-[16/9] relative overflow-hidden" style={{ background: `radial-gradient(80% 60% at 50% 40%, hsl(${t.hue} / 0.5), transparent 70%), linear-gradient(160deg, hsl(22 16% 14%), hsl(22 16% 7%))` }}>
                   <div className="absolute inset-0 flour-texture" />
-                  {/* fake video frame */}
-                  <div className="absolute inset-6 rounded-3xl border border-foreground/10 overflow-hidden">
-                    <div className="absolute inset-0" style={{ background: `conic-gradient(from 200deg, hsl(${t.hue}/0.6), transparent 70%)`, filter: "blur(30px)" }} />
-                    <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between">
-                      <div className="flex items-center gap-1.5">
-                        {[...Array(5)].map((_, k) => <Star key={k} className="w-3.5 h-3.5 fill-cheese text-cheese" />)}
+                  {/* fake storefront illustration */}
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="text-center">
+                      <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center font-display text-3xl font-bold text-primary-foreground shadow-ember" style={{ background: `linear-gradient(135deg, hsl(${t.hue}), hsl(28 100% 55%))` }}>
+                        {t.initials}
                       </div>
-                      <span className="text-xs px-2 py-1 rounded-full bg-foreground/10 backdrop-blur">2:14</span>
+                      <p className="mt-3 text-sm font-semibold text-foreground/80">{t.name}</p>
                     </div>
                   </div>
-                  <button aria-label="Play" className="absolute inset-0 flex items-center justify-center">
-                    <span className="relative w-20 h-20 rounded-full bg-gradient-warm shadow-ember flex items-center justify-center group-hover:scale-110 transition-transform">
-                      <Play className="w-8 h-8 text-primary-foreground ml-1 fill-current" />
-                      <span className="absolute inset-0 rounded-full animate-ping bg-primary/30" />
-                    </span>
-                  </button>
+                  {/* warm overlay gradient at bottom */}
+                  <div className="absolute bottom-0 inset-x-0 h-12" style={{ background: `linear-gradient(to top, hsl(22 16% 9%), transparent)` }} />
                 </div>
-                <div className="p-6">
-                  <h3 className="font-display text-xl">{t.name}</h3>
-                  <p className="text-muted-foreground mt-1">{t.result}</p>
+
+                {/* testimonial text */}
+                <div className="p-6 flex flex-col gap-4 flex-1">
+                  <Quote className="w-6 h-6 text-primary/60" />
+                  <p className="text-muted-foreground leading-relaxed text-sm flex-1">"{t.text}"</p>
+                  <div className="flex items-center gap-3 pt-2 border-t border-border/40">
+                    <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-primary-foreground" style={{ background: `linear-gradient(135deg, hsl(${t.hue}), hsl(28 100% 55%))` }}>
+                      {t.initials}
+                    </div>
+                    <div>
+                      <p className="font-semibold text-sm text-foreground">{t.name}</p>
+                      <p className="text-xs text-muted-foreground">Cliente Brasa Company</p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </Reveal>
@@ -379,12 +390,14 @@ const About = () => (
     <div className="container grid lg:grid-cols-2 gap-14 items-center">
       <Reveal>
         <SectionLabel>Quem somos</SectionLabel>
-        <h2 className="mt-5 text-3xl sm:text-4xl md:text-5xl">
-          Marketing para pizzarias <span className="text-gradient-warm">não pode parecer</span> marketing para qualquer negócio.
-        </h2>
-        <p className="mt-5 text-muted-foreground text-lg leading-relaxed max-w-xl">
-          A <strong className="text-foreground">Pizza Growth Studio</strong> nasceu para unir estratégia, criativos apetitosos e performance local. Ajudamos pizzarias a vender mais usando campanhas, conteúdo, WhatsApp, cardápio digital e relatórios claros.
-        </p>
+        <div className="lg:max-w-[90%]">
+          <h2 className="mt-5">
+            Marketing para pizzarias <span className="text-gradient-warm">não pode parecer</span> marketing para qualquer negócio.
+          </h2>
+          <p className="mt-5 text-muted-foreground text-lg leading-relaxed">
+            A <strong className="text-foreground">Brasa Company</strong> nasceu para unir estratégia, criativos apetitosos e performance local. Ajudamos pizzarias a vender mais usando campanhas, conteúdo, WhatsApp, cardápio digital e relatórios claros.
+          </p>
+        </div>
         <div className="mt-8 flex gap-3 flex-wrap">
           {["Estratégia", "Criativos", "Performance", "Atendimento"].map(t => (
             <span key={t} className="px-4 py-2 rounded-full text-sm border border-border/70 bg-card/60">{t}</span>
@@ -395,23 +408,22 @@ const About = () => (
       <Reveal delay={0.15}>
         <div className="relative h-[520px]">
           {[
-            { l: "Equipe", rot: -8, x: "5%", y: "5%", hue: "18 92% 50%" },
-            { l: "Forno", rot: 6, x: "40%", y: "0%", hue: "6 80% 50%" },
-            { l: "Bastidores", rot: -3, x: "12%", y: "45%", hue: "44 96% 58%" },
-            { l: "Pedidos subindo", rot: 9, x: "48%", y: "42%", hue: "14 100% 56%" },
+            { rot: -8, x: "5%", y: "5%", hue: "18 92% 50%" },
+            { rot: 6, x: "40%", y: "0%", hue: "6 80% 50%" },
+            { rot: -3, x: "12%", y: "45%", hue: "44 96% 58%" },
+            { rot: 9, x: "48%", y: "42%", hue: "14 100% 56%" },
           ].map((p, i) => (
-            <motion.div key={p.l}
+            <motion.div key={i}
               initial={{ opacity: 0, y: 30, rotate: 0 }}
               whileInView={{ opacity: 1, y: 0, rotate: p.rot }}
               transition={{ delay: i * 0.1, duration: 0.7 }}
               viewport={{ once: true }}
               whileHover={{ rotate: 0, scale: 1.04, zIndex: 10 }}
-              className="absolute w-56 p-3 bg-dough rounded-2xl shadow-soft cursor-grab"
-              style={{ left: p.x, top: p.y }}
+              className="absolute w-56 p-3 bg-dough shadow-soft cursor-grab"
+              style={{ left: p.x, top: p.y, borderRadius: "0.5rem" }}
             >
-              <div className="aspect-[4/5] rounded-xl relative overflow-hidden" style={{ background: `linear-gradient(160deg, hsl(${p.hue} / 0.85), hsl(22 16% 14%))` }}>
+              <div className="aspect-[4/5] relative overflow-hidden" style={{ borderRadius: "0.5rem", background: `linear-gradient(160deg, hsl(${p.hue} / 0.85), hsl(22 16% 14%))` }}>
                 <div className="absolute inset-0 flour-texture" />
-                <div className="absolute bottom-3 left-3 right-3 text-dough-foreground bg-dough/90 rounded-lg px-2 py-1 text-xs font-semibold">{p.l}</div>
               </div>
             </motion.div>
           ))}
@@ -421,32 +433,63 @@ const About = () => (
   </section>
 );
 
-/* ------------- METHOD (Pizza wheel) ------------- */
+/* ------------- METHOD (Metodologia BRASA) ------------- */
 const Method = () => {
   const slices = [
-    { t: "Diagnóstico", d: "Mapeamos canais, gargalos e oportunidades reais.", icon: ClipboardList },
-    { t: "Posicionamento local", d: "Sua pizzaria como referência no bairro.", icon: Target },
-    { t: "Criativos de alta fome", d: "Peças e vídeos que despertam vontade de pedir.", icon: Flame },
-    { t: "Tráfego pago", d: "Aparecer para quem está perto e pronto para comprar.", icon: Megaphone },
-    { t: "Conversão", d: "WhatsApp e cardápio digital que fecham pedidos.", icon: MessageCircle },
-    { t: "Relatórios", d: "Indicadores claros e otimização contínua.", icon: BarChart3 },
+    {
+      letter: "B", t: "Base Estratégica", icon: ClipboardList,
+      d: "Mapeamos seus canais, concorrentes e bloqueios antes de agir. Entendemos exatamente onde sua pizzaria está travada. Sem diagnóstico, não existe estratégia.",
+    },
+    {
+      letter: "R", t: "Reputação Local", icon: Target,
+      d: "Posicionamos sua marca como referência no bairro e na cidade. Sua pizzaria passa a comunicar desejo, identidade e confiança. O cliente te escolhe antes de ver o cardápio.",
+    },
+    {
+      letter: "A", t: "Atração", icon: Flame,
+      d: "Criativos, vídeos e conteúdo que despertam fome e param o scroll. Peças pensadas para gerar desejo imediato e associação positiva. Sua pizzaria se torna irresistível nos feeds.",
+    },
+    {
+      letter: "S", t: "Sedução & Conversão", icon: Megaphone,
+      d: "Tráfego pago, WhatsApp e cardápio digital trabalhando juntos para fechar pedidos. Aparecemos para quem está perto e pronto para comprar. Transformamos atenção em ação real.",
+    },
+    {
+      letter: "A", t: "Análise Contínua", icon: BarChart3,
+      d: "Relatórios claros, otimização constante e decisões baseadas em dados reais. Você sabe o que vende, por que vende e como crescer mais. Cada mês supera o anterior.",
+    },
   ];
   const [active, setActive] = useState(0);
   const A = slices[active];
+  const N = slices.length;
+
   return (
     <section id="metodo" className="py-24 md:py-32 relative">
       <div className="container">
-        <Reveal><SectionLabel>Pizza Growth System</SectionLabel></Reveal>
-        <div className="mt-5 max-w-3xl">
-          <Reveal delay={0.05}><h2 className="text-3xl sm:text-4xl md:text-5xl">Existe um método comprovado para sua pizzaria <span className="text-gradient-warm">nunca parar de vender</span>.</h2></Reveal>
-          <Reveal delay={0.1}><p className="mt-5 text-muted-foreground text-lg">Do primeiro impacto ao novo pedido: cada etapa é pensada para gerar fome, confiança e ação.</p></Reveal>
+        <Reveal><SectionLabel>Metodologia Brasa</SectionLabel></Reveal>
+        <div className="mt-5 lg:max-w-[50%]">
+          <Reveal delay={0.05}><h2>Existe um método comprovado para sua pizzaria <span className="text-gradient-warm">nunca parar de vender</span>.</h2></Reveal>
+          <Reveal delay={0.1}><p className="mt-5 text-muted-foreground text-lg">Do primeiro impacto ao novo pedido: cada etapa é pensada para gerar desejo, autoridade e ação.</p></Reveal>
         </div>
 
+        <Reveal delay={0.12}>
+          <div className="mt-10 flex gap-2 flex-wrap">
+            {slices.map((s, i) => (
+              <button
+                key={i}
+                onClick={() => setActive(i)}
+                className={`flex items-center gap-2 px-4 py-2 rounded-full border transition-all font-display text-lg font-bold ${i === active ? "bg-gradient-warm text-primary-foreground border-transparent shadow-ember" : "border-border/60 text-muted-foreground hover:text-foreground"}`}
+              >
+                <span className="text-xl">{s.letter}</span>
+                <span className="text-xs font-normal hidden sm:block">{s.t}</span>
+              </button>
+            ))}
+            <div className="flex items-center px-3 py-2 text-muted-foreground/50 text-sm italic">= Metodologia BRASA</div>
+          </div>
+        </Reveal>
+
         <div className="mt-16 grid lg:grid-cols-[1fr_1.1fr] gap-16 items-center">
-          {/* Wheel */}
           <Reveal>
             <div className="relative aspect-square max-w-[520px] mx-auto">
-              <div className="absolute inset-0 rounded-full bg-gradient-warm opacity-20 blur-3xl" />
+              <div className="absolute inset-0 rounded-full bg-gradient-warm opacity-15 blur-3xl" />
               <svg viewBox="0 0 200 200" className="relative w-full h-full">
                 <defs>
                   {slices.map((_, i) => (
@@ -455,67 +498,75 @@ const Method = () => {
                       <stop offset="100%" stopColor={i % 2 ? "hsl(44 96% 58%)" : "hsl(14 100% 56%)"} />
                     </linearGradient>
                   ))}
+                  <filter id="sliceShadow" x="-20%" y="-20%" width="140%" height="140%">
+                    <feDropShadow dx="0" dy="2" stdDeviation="3" floodColor="hsl(14 100% 30%)" floodOpacity="0.4"/>
+                  </filter>
                 </defs>
-                <circle cx="100" cy="100" r="96" fill="hsl(28 45% 22%)" />
+                <circle cx="100" cy="100" r="96" fill="hsl(28 45% 18%)"/>
+                <circle cx="100" cy="100" r="93" fill="hsl(28 30% 14%)"/>
                 {slices.map((s, i) => {
-                  const a0 = (i / 6) * Math.PI * 2 - Math.PI / 2;
-                  const a1 = ((i + 1) / 6) * Math.PI * 2 - Math.PI / 2;
-                  const r = 92;
+                  const a0 = (i / N) * Math.PI * 2 - Math.PI / 2;
+                  const a1 = ((i + 1) / N) * Math.PI * 2 - Math.PI / 2;
+                  const r = 88;
                   const x0 = 100 + Math.cos(a0) * r, y0 = 100 + Math.sin(a0) * r;
                   const x1 = 100 + Math.cos(a1) * r, y1 = 100 + Math.sin(a1) * r;
                   const isActive = i === active;
+                  const midA = (a0 + a1) / 2;
+                  const lx = 100 + Math.cos(midA) * 60;
+                  const ly = 100 + Math.sin(midA) * 60;
                   return (
                     <g key={i} className="cursor-pointer" onMouseEnter={() => setActive(i)} onClick={() => setActive(i)}>
-                      <path d={`M100 100 L ${x0} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y1} Z`}
+                      <path
+                        d={`M100 100 L ${x0} ${y0} A ${r} ${r} 0 0 1 ${x1} ${y1} Z`}
                         fill={`url(#sl${i})`}
-                        stroke="hsl(22 14% 8%)" strokeWidth="2"
-                        opacity={isActive ? 1 : 0.55}
-                        style={{ transition: "all .4s", transformOrigin: "100px 100px", transform: isActive ? "scale(1.04)" : "scale(1)" }}
+                        stroke="hsl(22 14% 8%)" strokeWidth="2.5"
+                        opacity={isActive ? 1 : 0.5}
+                        filter={isActive ? "url(#sliceShadow)" : undefined}
+                        style={{ transition: "all .4s", transformOrigin: "100px 100px", transform: isActive ? "scale(1.06)" : "scale(1)" }}
                       />
+                      <text x={lx} y={ly} textAnchor="middle" dominantBaseline="middle"
+                        fill={isActive ? "white" : "hsl(36 35% 94% / 0.8)"}
+                        fontSize="16" fontWeight="bold" fontFamily="Bricolage Grotesque"
+                        style={{ transition: "all .4s", pointerEvents: "none" }}>
+                        {s.letter}
+                      </text>
                     </g>
                   );
                 })}
-                {/* toppings */}
-                {[...Array(14)].map((_, i) => {
-                  const a = (i / 14) * Math.PI * 2;
-                  const rr = 30 + (i % 3) * 18;
-                  return <circle key={i} cx={100 + Math.cos(a) * rr} cy={100 + Math.sin(a) * rr} r={i % 2 ? 3 : 2.2} fill={i % 2 ? "hsl(6 80% 35%)" : "hsl(130 60% 30%)"} />;
+                {[...Array(10)].map((_, i) => {
+                  const a = (i / 10) * Math.PI * 2;
+                  const rr = 74;
+                  return <circle key={i} cx={100 + Math.cos(a) * rr} cy={100 + Math.sin(a) * rr} r={i % 2 ? 2.8 : 2} fill={i % 2 ? "hsl(6 80% 30%)" : "hsl(130 55% 25%)"} opacity="0.7"/>;
                 })}
-                <circle cx="100" cy="100" r="22" fill="hsl(22 16% 9%)" stroke="hsl(18 92% 56%)" strokeWidth="1.5" />
+                <circle cx="100" cy="100" r="24" fill="hsl(22 16% 7%)" stroke="hsl(18 92% 56%)" strokeWidth="2"/>
+                <circle cx="100" cy="100" r="20" fill="hsl(22 16% 10%)"/>
               </svg>
-              {/* center label */}
               <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
                 <div className="text-center">
-                  <p className="text-[10px] uppercase tracking-widest text-muted-foreground">etapa</p>
+                  <p className="text-[9px] uppercase tracking-widest text-muted-foreground">etapa</p>
                   <p className="font-display text-2xl text-gradient-warm">0{active + 1}</p>
                 </div>
               </div>
-              {/* slice labels */}
-              {slices.map((s, i) => {
-                const a = ((i + 0.5) / 6) * Math.PI * 2 - Math.PI / 2;
-                const x = 50 + Math.cos(a) * 56;
-                const y = 50 + Math.sin(a) * 56;
-                return (
-                  <span key={s.t} className={`absolute -translate-x-1/2 -translate-y-1/2 text-[11px] md:text-xs font-semibold uppercase tracking-wide whitespace-nowrap transition ${i === active ? "text-foreground" : "text-foreground/70"}`}
-                    style={{ left: `${x}%`, top: `${y}%` }}>{s.t}</span>
-                );
-              })}
             </div>
           </Reveal>
 
-          {/* Active slice card */}
           <Reveal delay={0.1}>
             <div key={A.t} className="glass rounded-4xl p-8 md:p-10 animate-fade-in-up">
-              <div className="w-14 h-14 rounded-2xl bg-gradient-warm flex items-center justify-center shadow-ember">
-                <A.icon className="w-7 h-7 text-primary-foreground" />
+              <div className="flex items-center gap-4 mb-2">
+                <div className="w-16 h-16 rounded-2xl bg-gradient-warm flex items-center justify-center shadow-ember">
+                  <span className="font-display text-3xl font-black text-primary-foreground">{A.letter}</span>
+                </div>
+                <div className="w-12 h-12 rounded-2xl bg-card/80 border border-border/60 flex items-center justify-center">
+                  <A.icon className="w-6 h-6 text-primary-glow" />
+                </div>
               </div>
-              <p className="mt-6 text-sm uppercase tracking-widest text-muted-foreground">Fatia 0{active + 1}</p>
-              <h3 className="mt-2 font-display text-3xl md:text-4xl">{A.t}</h3>
+              <p className="mt-4 text-xs uppercase tracking-widest text-muted-foreground">Metodologia BRASA · Etapa 0{active + 1}</p>
+              <h3 className="mt-2 font-display text-2xl md:text-3xl">{A.t}</h3>
               <p className="mt-4 text-muted-foreground text-lg leading-relaxed">{A.d}</p>
               <div className="mt-7 flex flex-wrap gap-2">
                 {slices.map((s, i) => (
                   <button key={s.t} onClick={() => setActive(i)} className={`px-3 py-1.5 rounded-full text-xs font-semibold border transition ${i === active ? "bg-primary text-primary-foreground border-primary" : "border-border/70 text-muted-foreground hover:text-foreground"}`}>
-                    0{i + 1} {s.t}
+                    <span className="font-bold">{s.letter}</span> · 0{i + 1}
                   </button>
                 ))}
               </div>
@@ -543,24 +594,23 @@ const Services = () => {
       <div className="container">
         <Reveal><SectionLabel>O que fazemos</SectionLabel></Reveal>
         <Reveal delay={0.05}>
-          <h2 className="mt-5 max-w-3xl text-3xl sm:text-4xl md:text-5xl">
-            A assessoria estrutura o marketing da sua pizzaria com base no que ela <span className="text-gradient-warm">precisa agora</span>.
-          </h2>
+          <div className="mt-5 lg:max-w-[50%]">
+            <h2>
+              A assessoria estrutura o marketing da sua pizzaria <span className="text-gradient-warm">com base no seu diagnóstico</span>.
+            </h2>
+          </div>
         </Reveal>
 
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
           {items.map((s, i) => (
             <Reveal key={s.t} delay={(i % 3) * 0.05}>
-              <div className="group relative h-full tilt-card rounded-4xl p-7 bg-card/60 border border-border/60 overflow-hidden">
+              <div className="group relative h-full tilt-card p-7 bg-card/60 border border-border/60 overflow-hidden" style={{ borderRadius: "0.8rem" }}>
                 <div className="absolute -top-16 -right-16 w-44 h-44 rounded-full bg-gradient-warm opacity-0 group-hover:opacity-25 blur-2xl transition-opacity duration-500" />
                 <div className="relative w-14 h-14 rounded-2xl bg-gradient-warm flex items-center justify-center shadow-ember">
                   <s.icon className="w-7 h-7 text-primary-foreground" />
                 </div>
                 <h3 className="mt-6 font-display text-2xl">{s.t}</h3>
                 <p className="mt-3 text-muted-foreground leading-relaxed">{s.d}</p>
-                <div className="mt-6 flex items-center gap-2 text-sm font-semibold text-primary-glow opacity-0 group-hover:opacity-100 translate-y-1 group-hover:translate-y-0 transition-all">
-                  Saber mais <ArrowRight className="w-4 h-4" />
-                </div>
               </div>
             </Reveal>
           ))}
@@ -576,42 +626,48 @@ const Plans = () => (
     <div className="container grid lg:grid-cols-2 gap-14 items-center">
       <Reveal>
         <SectionLabel>Planos personalizados</SectionLabel>
-        <h2 className="mt-5 text-3xl sm:text-4xl md:text-5xl">
-          Você escolhe a solução certa para a <span className="text-gradient-warm">fase</span> que sua pizzaria vive hoje.
-        </h2>
-        <p className="mt-5 text-muted-foreground text-lg max-w-xl">
-          Criamos planos flexíveis para pizzarias que querem sair do improviso e transformar marketing em uma rotina de vendas.
-        </p>
+        <div className="lg:max-w-[90%]">
+          <h2 className="mt-5">
+            Você escolhe a solução certa para a <span className="text-gradient-warm">fase</span> que sua pizzaria vive hoje.
+          </h2>
+          <p className="mt-5 text-muted-foreground text-lg">
+            O plano será personalizado de acordo com o diagnóstico onde sua pizzaria está o bloqueio de crescimento.
+          </p>
+        </div>
         <a href="#form" className="btn-ember mt-8">Quero entender meu plano <ArrowRight className="w-5 h-5" /></a>
       </Reveal>
 
       <Reveal delay={0.15}>
         <div className="relative aspect-[5/4]">
-          {/* melted cheese growth chart */}
           <svg viewBox="0 0 500 400" className="w-full h-full">
             <defs>
               <linearGradient id="cheeseG" x1="0" y1="0" x2="0" y2="1">
                 <stop offset="0%" stopColor="hsl(44 96% 60%)" />
                 <stop offset="100%" stopColor="hsl(28 100% 50%)" />
               </linearGradient>
+              <linearGradient id="cheeseG2" x1="0" y1="0" x2="1" y2="0">
+                <stop offset="0%" stopColor="hsl(6 80% 52%)" />
+                <stop offset="100%" stopColor="hsl(44 96% 60%)" />
+              </linearGradient>
               <filter id="blur1"><feGaussianBlur stdDeviation="6"/></filter>
             </defs>
-            <path d="M0 280 Q 80 240 130 260 T 250 200 T 380 130 T 500 60 L 500 400 L 0 400 Z" fill="url(#cheeseG)" opacity="0.35" />
-            <path d="M0 280 Q 80 240 130 260 T 250 200 T 380 130 T 500 60"
-              fill="none" stroke="url(#cheeseG)" strokeWidth="6" strokeLinecap="round" />
-            {/* drips */}
-            {[{x:130,h:30},{x:250,h:50},{x:380,h:40},{x:460,h:60}].map((d,i)=>(
+            <path d="M0 280 Q 80 240 130 260 T 250 200 T 380 130 T 500 60 L 500 400 L 0 400 Z" fill="url(#cheeseG)" opacity="0.25" />
+            <path d="M0 280 Q 80 240 130 260 T 250 200 T 380 130 T 500 60 L 500 400 L 0 400 Z" fill="url(#cheeseG)" opacity="0.15" filter="url(#blur1)" />
+            <path d="M0 280 Q 80 240 130 260 T 250 200 T 380 130 T 500 60" fill="none" stroke="url(#cheeseG2)" strokeWidth="5" strokeLinecap="round" />
+            {[{x:130,y:260,h:32},{x:250,y:200,h:52},{x:380,y:130,h:42},{x:460,y:80,h:62}].map((d,i)=>(
               <g key={i}>
-                <path d={`M${d.x} ${i===0?260:i===1?200:i===2?130:80} q -6 ${d.h*0.5} 0 ${d.h}`} stroke="url(#cheeseG)" strokeWidth="5" fill="none" strokeLinecap="round" />
-                <circle cx={d.x} cy={(i===0?260:i===1?200:i===2?130:80)+d.h+4} r="6" fill="url(#cheeseG)" />
+                <path d={`M${d.x} ${d.y} q -5 ${d.h*0.5} 0 ${d.h}`} stroke="url(#cheeseG2)" strokeWidth="4.5" fill="none" strokeLinecap="round" />
+                <circle cx={d.x} cy={d.y+d.h+4} r="6" fill="url(#cheeseG2)" />
               </g>
             ))}
-            {/* growth points */}
-            {[{x:130,y:260,v:"Início"},{x:250,y:200,v:"+pedidos"},{x:380,y:130,v:"+ticket"},{x:460,y:80,v:"escala"}].map((p,i)=>(
+            {[{x:0,y:280,v:"Início"},{x:130,y:260,v:"+pedidos"},{x:250,y:200,v:"+ticket"},{x:380,y:130,v:"escala"},{x:480,y:65,v:"🔥"}].map((p,i)=>(
               <g key={i}>
-                <circle cx={p.x} cy={p.y} r="10" fill="hsl(22 16% 9%)" stroke="hsl(18 92% 56%)" strokeWidth="3" />
-                <text x={p.x} y={p.y-18} textAnchor="middle" fill="hsl(36 35% 94%)" fontSize="14" fontFamily="Bricolage Grotesque">{p.v}</text>
+                <circle cx={p.x} cy={p.y} r="10" fill="hsl(22 16% 9%)" stroke="hsl(18 92% 56%)" strokeWidth="2.5" />
+                <text x={p.x} y={p.y-18} textAnchor="middle" fill="hsl(36 35% 94%)" fontSize="13" fontFamily="Bricolage Grotesque">{p.v}</text>
               </g>
+            ))}
+            {[100,200,300].map(y => (
+              <line key={y} x1="0" y1={y} x2="500" y2={y} stroke="hsl(36 35% 94% / 0.06)" strokeWidth="1" strokeDasharray="4 8"/>
             ))}
           </svg>
         </div>
@@ -629,8 +685,8 @@ const FinalCTA = () => (
         <div className="absolute -top-24 -left-20 w-80 h-80 rounded-full bg-cheese/40 blur-3xl" />
         <div className="absolute -bottom-32 -right-20 w-96 h-96 rounded-full bg-tomato blur-3xl opacity-60" />
         <div className="relative max-w-3xl">
-          <span className="chip !bg-white/15 !border-white/25 !text-white"><Flame className="w-3.5 h-3.5" /> Vagas limitadas neste mês</span>
-          <h2 className="mt-6 text-4xl md:text-6xl text-white">
+          <span className="chip !bg-white/15 !border-white/25 !text-white"><Flame className="w-3.5 h-3.5" /> Agende a sua avaliação agora mesmo</span>
+          <h2 className="mt-6 text-white">
             Receba um time que estrutura o marketing da sua pizzaria como <span className="italic">base para crescer</span>.
           </h2>
           <p className="mt-6 text-white/90 text-lg max-w-2xl">
@@ -653,7 +709,7 @@ const FinalCTA = () => (
 /* ------------- FAQ ------------- */
 const FAQ = () => {
   const qs = [
-    { q: "O que exatamente a Pizza Growth Studio faz?", a: "Estruturamos o marketing da sua pizzaria de ponta a ponta: estratégia, criativos, tráfego pago, WhatsApp, cardápio digital e relatórios — sempre focados em gerar mais pedidos." },
+    { q: "O que exatamente a Brasa Company faz?", a: "Estruturamos o marketing da sua pizzaria de ponta a ponta: estratégia, criativos, tráfego pago, WhatsApp, cardápio digital e relatórios — sempre focados em gerar mais pedidos." },
     { q: "Preciso cancelar a agência atual?", a: "Não. Fazemos diagnóstico gratuito e mostramos onde podemos somar. A decisão é sua, com clareza dos resultados esperados." },
     { q: "Em quanto tempo vejo resultados?", a: "Pizzarias bem estruturadas costumam ver os primeiros impactos nas primeiras 2 a 4 semanas, com evolução consistente nos meses seguintes." },
     { q: "Vocês atendem pizzarias pequenas?", a: "Sim. Temos planos para pizzarias em diferentes fases, do bairro à rede em expansão." },
@@ -665,7 +721,7 @@ const FAQ = () => {
       <div className="container max-w-3xl">
         <Reveal><SectionLabel>Perguntas frequentes</SectionLabel></Reveal>
         <Reveal delay={0.05}>
-          <h2 className="mt-5 text-3xl sm:text-4xl md:text-5xl">Tudo o que você quer saber <span className="text-gradient-warm">antes de começar</span>.</h2>
+          <h2 className="mt-5">Tudo o que você quer saber <span className="text-gradient-warm">antes de começar</span>.</h2>
         </Reveal>
 
         <div className="mt-12 space-y-3">
@@ -699,37 +755,35 @@ const Footer = () => (
     <div className="container">
       <div className="grid md:grid-cols-[1.4fr_1fr_1fr] gap-10">
         <div>
-          <a href="#top" className="flex items-center gap-2 font-display font-bold text-2xl">
-            <span className="w-10 h-10 rounded-full bg-gradient-warm flex items-center justify-center shadow-ember">
-              <Pizza className="w-5 h-5 text-primary-foreground" />
-            </span>
-            Pizza <span className="text-gradient-warm">Growth Studio</span>
+          <a href="#top" className="flex items-center gap-3">
+            <img src="/images/logo-brasa.png" alt="Brasa Company" style={{ height: "5rem", width: "auto" }} />
           </a>
-          <p className="mt-4 text-muted-foreground max-w-sm">Marketing gastronômico exclusivo para pizzarias que querem vender mais, todos os dias.</p>
+          <p className="mt-4 text-muted-foreground max-w-sm">Assessoria de Marketing Gastronômico exclusivo para pizzarias que querem vender mais.</p>
         </div>
         <div>
           <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Navegação</p>
           <ul className="space-y-2">
-            <li><a href="#metodo" className="hover:text-primary-glow">Método</a></li>
-            <li><a href="#servicos" className="hover:text-primary-glow">Serviços</a></li>
-            <li><a href="#provas" className="hover:text-primary-glow">Resultados</a></li>
-            <li><a href="#faq" className="hover:text-primary-glow">FAQ</a></li>
+            <li><a href="#metodo" className="hover:text-primary-glow transition">Método</a></li>
+            <li><a href="#servicos" className="hover:text-primary-glow transition">Serviços</a></li>
+            <li><a href="#provas" className="hover:text-primary-glow transition">Resultados</a></li>
+            <li><a href="#faq" className="hover:text-primary-glow transition">FAQ</a></li>
           </ul>
         </div>
         <div>
           <p className="text-xs uppercase tracking-widest text-muted-foreground mb-3">Social</p>
           <div className="flex gap-3">
-            {[Instagram, MessageCircle, Linkedin].map((Icon, i) => (
-              <a key={i} href="#" className="w-11 h-11 rounded-full grid place-items-center border border-border/70 bg-card/60 hover:bg-gradient-warm hover:border-transparent transition-all">
-                <Icon className="w-5 h-5" />
-              </a>
-            ))}
+            <a href="https://instagram.com/brasa.co" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full grid place-items-center border border-border/70 bg-card/60 hover:bg-gradient-warm hover:border-transparent transition-all">
+              <Instagram className="w-5 h-5" />
+            </a>
+            <a href="https://google.com/" target="_blank" rel="noopener noreferrer" className="w-11 h-11 rounded-full grid place-items-center border border-border/70 bg-card/60 hover:bg-gradient-warm hover:border-transparent transition-all">
+              <Globe className="w-5 h-5" />
+            </a>
           </div>
         </div>
       </div>
       <div className="mt-12 pt-6 border-t border-border/60 flex flex-col md:flex-row gap-3 items-center justify-between text-sm text-muted-foreground">
-        <p>2026 © Pizza Growth Studio • Marketing para pizzarias que querem vender mais.</p>
-        <p>Feito com <span className="text-tomato">●</span> molho, queijo e estratégia.</p>
+        <p>2026 © Brasa Company • Assessoria de Marketing para Pizzarias.</p>
+        <p>Feito com <span className="text-tomato">❤️</span> molho, queijo e método.</p>
       </div>
     </div>
   </footer>
@@ -744,6 +798,9 @@ const StickyCTA = () => (
   </div>
 );
 
+/* ------------- Poppins font import ------------- */
+const fontImport = `@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');`;
+
 /* ------------- Style helpers ------------- */
 const fieldStyles = `
 .field { width:100%; background: hsl(var(--input)); border:1px solid hsl(var(--border)); border-radius: 14px; padding: 0.85rem 1rem; color: hsl(var(--foreground)); font-size: 0.95rem; transition: all .25s; }
@@ -755,6 +812,7 @@ select.field { appearance: none; background-image: linear-gradient(45deg, transp
 const Index = () => {
   return (
     <main className="relative overflow-x-clip">
+      <style>{fontImport}</style>
       <style>{fieldStyles}</style>
       <Nav />
       <Hero />

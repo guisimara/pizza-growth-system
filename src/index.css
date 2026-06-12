@@ -86,8 +86,10 @@
     font-weight: 700;
     letter-spacing: -0.02em;
   }
-  h1 { font-size: 3.8rem; line-height: 1.05; }
-  h2 { font-size: 2.45rem; line-height: 1.2; }
+  h1 { font-size: 3rem; line-height: 1.05; }
+  h2 { font-size: 2.3rem; line-height: 1.2; }
+  h3 { font-size: 1.2rem; line-height: 1.4; }
+  p { font-size: 1.1rem; }
 }
 
 @layer components {
@@ -125,7 +127,8 @@
     opacity: 0.8;
   }
   .btn-ember {
-    @apply relative inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-semibold text-base transition-all duration-300;
+    @apply relative inline-flex items-center justify-center gap-2 rounded-full font-semibold text-base transition-all duration-300;
+    padding: 0.5rem 1.75rem;
     background: var(--gradient-warm);
     color: hsl(var(--primary-foreground));
     box-shadow: var(--shadow-ember);
@@ -141,7 +144,8 @@
   .btn-ember:hover::after { background-position: -50% 0; }
 
   .btn-ghost-warm {
-    @apply inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full font-semibold text-base border transition-all duration-300;
+    @apply inline-flex items-center justify-center gap-2 rounded-full font-semibold text-base border transition-all duration-300;
+    padding: 0.5rem 1.75rem;
     border-color: hsl(36 30% 70% / 0.18);
     color: hsl(var(--foreground));
     background: hsl(22 16% 9% / 0.5);

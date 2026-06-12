@@ -112,7 +112,7 @@ const Hero = () => (
 
       {/* Hero visual */}
       <Reveal delay={0.2}>
-        <div className="relative aspect-square max-w-[560px] mx-auto">
+        <div className="relative aspect-square max-w-[500px] mx-auto">
           {/* glow */}
           <div className="absolute inset-6 rounded-full bg-gradient-warm opacity-25 blur-3xl animate-glow" />
 
@@ -193,8 +193,8 @@ const Marquee = () => {
   const items = ["PIZZARIAS", "DELIVERY", "TRÁFEGO PAGO", "CRIATIVOS QUE DÃO FOME", "WHATSAPP", "CARDÁPIO DIGITAL", "RELATÓRIOS", "CRESCIMENTO LOCAL"];
   const row = [...items, ...items];
   return (
-    <div className="relative py-7 border-y border-border/60 bg-card/40 mask-fade-r overflow-hidden">
-      <div className="flex animate-marquee whitespace-nowrap gap-12 font-display text-2xl md:text-4xl">
+    <div className="relative border-y border-border/60 bg-card/40 mask-fade-r overflow-hidden" style={{ paddingTop: "1rem", paddingBottom: "1rem" }}>
+      <div className="flex animate-marquee whitespace-nowrap gap-12 font-display" style={{ fontSize: "1.3rem" }}>
         {row.map((t, i) => (
           <span key={i} className="flex items-center gap-12 text-foreground/85">
             {t}
@@ -308,20 +308,17 @@ const Testimonials = () => {
     {
       name: "Pizzaria Dona Bella Massa",
       text: "Aumentamos nosso faturamento de 40% com a metodologia, hoje já estamos planejando mudar nosso fluxo de trabalho para melhorar a margem de lucro da DM.",
-      hue: "18 92% 56%",
-      initials: "DB",
+      logo: "/images/logo-avalia1.png",
     },
     {
       name: "Forno da Villa",
       text: "Sensacional, trabalho impecável. A antiga agência passava faturamento bruto, agora temos clareza do nosso crescimento e vendas por canal. Brasa Company faz um serviço exemplar. Parabéns.",
-      hue: "6 80% 52%",
-      initials: "FV",
+      logo: "/images/logo-avalia2.png",
     },
     {
       name: "Napoli Pizza Express",
       text: "Volume de ligações, WhatsApp e venda direta do cardápio estão incríveis. Migrando operação quase 100% e parando de depender do iFood. Meninos são demais, muita organização e profissionalismo.",
-      hue: "44 96% 58%",
-      initials: "NP",
+      logo: "/images/logo-avalia3.png",
     },
   ];
   return (
@@ -345,20 +342,14 @@ const Testimonials = () => {
           {items.map((t, i) => (
             <Reveal key={t.name} delay={i * 0.08}>
               <div className="tilt-card relative border border-border/60 bg-card/60 overflow-hidden flex flex-col" style={{ borderRadius: "1rem" }}>
-                {/* pizzaria image placeholder */}
-                <div className="aspect-[16/9] relative overflow-hidden" style={{ background: `radial-gradient(80% 60% at 50% 40%, hsl(${t.hue} / 0.5), transparent 70%), linear-gradient(160deg, hsl(22 16% 14%), hsl(22 16% 7%))` }}>
-                  <div className="absolute inset-0 flour-texture" />
-                  {/* fake storefront illustration */}
+                {/* pizzaria image with real photos */}
+                <div className="aspect-[16/9] relative overflow-hidden">
+                  <img src="/images/fundo-embacado.png" alt="" className="absolute inset-0 w-full h-full object-cover" />
+                  <div className="absolute inset-0 bg-black/40" />
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <div className="text-center">
-                      <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center font-display text-3xl font-bold text-primary-foreground shadow-ember" style={{ background: `linear-gradient(135deg, hsl(${t.hue}), hsl(28 100% 55%))` }}>
-                        {t.initials}
-                      </div>
-                      <p className="mt-3 text-sm font-semibold text-foreground/80">{t.name}</p>
-                    </div>
+                    <img src={t.logo} alt={t.name} className="max-h-16 max-w-[70%] object-contain drop-shadow-lg" />
                   </div>
-                  {/* warm overlay gradient at bottom */}
-                  <div className="absolute bottom-0 inset-x-0 h-12" style={{ background: `linear-gradient(to top, hsl(22 16% 9%), transparent)` }} />
+                  <div className="absolute bottom-0 inset-x-0 h-12" style={{ background: "linear-gradient(to top, hsl(22 16% 9%), transparent)" }} />
                 </div>
 
                 {/* testimonial text */}
@@ -366,9 +357,7 @@ const Testimonials = () => {
                   <Quote className="w-6 h-6 text-primary/60" />
                   <p className="text-muted-foreground leading-relaxed text-sm flex-1">"{t.text}"</p>
                   <div className="flex items-center gap-3 pt-2 border-t border-border/40">
-                    <div className="w-9 h-9 rounded-full flex items-center justify-center text-xs font-bold text-primary-foreground" style={{ background: `linear-gradient(135deg, hsl(${t.hue}), hsl(28 100% 55%))` }}>
-                      {t.initials}
-                    </div>
+                    <img src={t.logo} alt={t.name} className="h-8 w-auto object-contain" />
                     <div>
                       <p className="font-semibold text-sm text-foreground">{t.name}</p>
                       <p className="text-xs text-muted-foreground">Cliente Brasa Company</p>
@@ -408,10 +397,10 @@ const About = () => (
       <Reveal delay={0.15}>
         <div className="relative h-[520px]">
           {[
-            { rot: -8, x: "5%", y: "5%", hue: "18 92% 50%" },
-            { rot: 6, x: "40%", y: "0%", hue: "6 80% 50%" },
-            { rot: -3, x: "12%", y: "45%", hue: "44 96% 58%" },
-            { rot: 9, x: "48%", y: "42%", hue: "14 100% 56%" },
+            { rot: -8, x: "5%", y: "5%", img: "/images/escritorio1.png" },
+            { rot: 6, x: "40%", y: "0%", img: "/images/escritorio2.png" },
+            { rot: -3, x: "12%", y: "45%", img: "/images/escritorio3.png" },
+            { rot: 9, x: "48%", y: "42%", img: "/images/escritorio4.png" },
           ].map((p, i) => (
             <motion.div key={i}
               initial={{ opacity: 0, y: 30, rotate: 0 }}
@@ -422,8 +411,8 @@ const About = () => (
               className="absolute w-56 p-3 bg-dough shadow-soft cursor-grab"
               style={{ left: p.x, top: p.y, borderRadius: "0.5rem" }}
             >
-              <div className="aspect-[4/5] relative overflow-hidden" style={{ borderRadius: "0.5rem", background: `linear-gradient(160deg, hsl(${p.hue} / 0.85), hsl(22 16% 14%))` }}>
-                <div className="absolute inset-0 flour-texture" />
+              <div className="aspect-[4/5] relative overflow-hidden" style={{ borderRadius: "0.5rem" }}>
+                <img src={p.img} alt="Escritório Brasa Company" className="w-full h-full object-cover" />
               </div>
             </motion.div>
           ))}
@@ -756,7 +745,7 @@ const Footer = () => (
       <div className="grid md:grid-cols-[1.4fr_1fr_1fr] gap-10">
         <div>
           <a href="#top" className="flex items-center gap-3">
-            <img src="/images/logo-brasa.png" alt="Brasa Company" style={{ height: "5rem", width: "auto" }} />
+            <img src="/images/logo-rodape.png" alt="Brasa Company" style={{ height: "5rem", width: "auto" }} />
           </a>
           <p className="mt-4 text-muted-foreground max-w-sm">Assessoria de Marketing Gastronômico exclusivo para pizzarias que querem vender mais.</p>
         </div>
